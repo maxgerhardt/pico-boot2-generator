@@ -22,7 +22,9 @@ python3 build.py
 
 You can also use the already pregenerated files in `generates/`.
 
-These were generated using arm-nono-eabi-gcc 10.2.1 (Q4 Major).
+These were generated using arm-none-eabi-gcc 10.2.1 (Q4 Major).
+
+The tool is compatible with both Unix and Windows.
 
 ## Credits
 
