@@ -25,7 +25,8 @@ jobs:
         run: |
           which arm-none-eabi-gcc || true
           arm-none-eabi-gcc --version
-          python3 build.py /home/runner/gcc-arm-none-eabi-10.2020.4-linux/gcc-arm-none-eabi-10-2020-q4-major --verbose
+          echo "$?"
+          python3 build.py --verbose
         shell: bash
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
