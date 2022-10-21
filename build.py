@@ -167,6 +167,8 @@ def get_toolchain_version(compiler_path, verb:bool=False):
         print("Executing: " + " ".join(args))
     try:
         return subprocess.check_output(args, stderr=subprocess.STDOUT, shell=True).decode('utf-8').splitlines()[0]
+    except subprocess.CalledProcessError as e:
+        return "command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output)
     except Exception as exc:
         return "Failed to get compiler version: " + repr(exc) 
 
