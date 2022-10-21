@@ -1,0 +1,12 @@
+# Settings for the Winbond W25Q32JV-IM 4MiB SPI flash.
+# Datasheet: https://www.winbond.com/resource-files/w25q32jv%20revg%2003272018%20plus.pdf
+total_size = 0x400000 # 4 MiB
+start_up_time_us = 5000
+memory_type = 0x70
+capacity = 0x16
+max_clock_speed_mhz = 133
+quad_enable_bit_mask = 0x02
+write_status_register_split = true
+01_continuous_status_write = true
+6b_quad_read = true
+32_qspi_write = true

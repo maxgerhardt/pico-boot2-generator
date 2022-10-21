@@ -1,0 +1,12 @@
+start_up_time_us = 10000
+manufacturer_id = 0xef # *no JDEC
+memory_type = 0x40 # no JDEC
+capacity = 0x14 # no JDEC
+max_clock_speed_mhz = 10
+quad_enable_bit_mask = 0x00
+has_sector_protection = false
+supports_fast_read = false
+write_status_register_split = false
+quad_enable_status_byte = 1
+6b_quad_read = false
+32_qspi_write = false

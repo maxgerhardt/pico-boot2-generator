@@ -1,0 +1,13 @@
+# Settings for the Winbond W25Q32JV-IQ 4MiB SPI flash.
+# Datasheet: https://www.mouser.com/datasheet/2/949/w25q32jv_revg_03272018_plus-1489806.pdf
+total_size = 0x400000 # 4 MiB
+start_up_time_us = 5000
+memory_type = 0x40
+capacity = 0x16
+max_clock_speed_mhz = 133
+quad_enable_status_byte = 2
+quad_enable_bit_mask = 0x02
+write_status_register_split = true
+01_continuous_status_write = true
+6b_quad_read = true
+32_qspi_write = true
