@@ -109,7 +109,7 @@ def exec_tool(args, input_file, output_file, verbose:bool=False):
     if verbose:
         print("Executing: " + args)
     try:
-        ret = subprocess.check_output(args, shell=True, stderr=subprocess.STDOUT)
+        ret = subprocess.check_output(args, shell=True)
         if len(ret) != 0:
             print("Output: " + str(ret))
     except Exception as exc:
