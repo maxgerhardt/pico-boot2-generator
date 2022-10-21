@@ -1,6 +1,3 @@
 [submodule "sdk"]
 	path = sdk
 	url = https://github.com/raspberrypi/pico-sdk.git
-[submodule "nvm.toml"]
-	path = nvm.toml
-	url = https://github.com/adafruit/nvm.toml.git
