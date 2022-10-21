@@ -20,7 +20,13 @@ jobs:
         uses: carlosperate/arm-none-eabi-gcc-action@v1
         with:
           release: '10-2020-q4'
+      - run: arm-none-eabi-gcc --version
       - name: Build examples
         run: |
           python3 build.py
         shell: bash
+     - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: Boot2_Files
+          path: generated
