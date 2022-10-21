@@ -13,7 +13,7 @@ Refer https://github.com/earlephilhower/arduino-pico/tree/master/boot2.
 Prerequisites: Python 3 and `arm-none-eabi-gcc` toolchain in the path.
 
 ```sh
-git clonehttps://github.com/maxgerhardt/pico-boot2-generator
+git clone https://github.com/maxgerhardt/pico-boot2-generator
 cd pico-boot2-generator
 git submodule update --init
 pip3 install -r requirements.txt
