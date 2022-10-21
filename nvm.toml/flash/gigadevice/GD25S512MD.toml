@@ -1,6 +1,0 @@
-# Settings for the Gigadevice GD25S512MD 64MiB SPI flash.
-# Datasheet: http://www.gigadevice.com/datasheet/gd25s512md/
-total_size = 0x4000000 # 64 MiB
-capacity = 0x19
-write_status_register_split = true
-e7_quad_word_read = false

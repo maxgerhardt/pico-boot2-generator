@@ -1,4 +1,0 @@
-# Settings for the ISSI IS25LP128F 16MiB SPI flash.
-# Datasheet: http://www.issi.com/WW/pdf/25LP-WP128F.pdf
-total_size = 0x1000000 # 16 MiB
-capacity = 0x18

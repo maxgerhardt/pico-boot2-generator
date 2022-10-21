@@ -8,7 +8,7 @@ import subprocess
 import gen_stage2 
 
 TOML_ROOT = "nvm.toml"
-BUILD_ROOT = "build"
+BUILD_ROOT = "generated"
 COMPILER_FLAGS = [
     "-DPICO_FLASH_SPI_CLKDIV=4",
     "-DRASPBERRYPI",
@@ -33,6 +33,7 @@ COMPILER_FLAGS = [
     "-DPICO_DISABLE_SHARED_IRQ_HANDLERS=0",
     "-DPICO_NO_BI_BOOTSEL_VIA_DOUBLE_RESET=0",
     "-DNDEBUG",
+    "-O3",  # yes, there's -Os too, just like circuitpython does
     "-Wall",
     "-Werror",
     "-std=gnu11",
@@ -99,7 +100,7 @@ COMPILER_FLAGS = [
 
 def exec_tool(args, input_file, output_file, verbose:bool=False):
     if verbose:
-        print("Executing: " + " ".join(args))
+        print("Executing: " + " ".join(map(str,args)))
     try:
         ret = subprocess.check_output(args, shell=True)
         if len(ret) != 0:
@@ -115,7 +116,10 @@ def get_compiler_tool(name:str, compiler_path:str):
 def exec_compiler(compiler_path:str, input_file, output_file, verbose:bool=False):
     tool = get_compiler_tool("arm-none-eabi-gcc", compiler_path)
     args = [ tool ] 
-    args.extend(COMPILER_FLAGS)
+    cflags = COMPILER_FLAGS.copy()
+    base = os.path.dirname(output_file)
+    cflags = [x if x != "-Wl,-Map=boot2.map" else f"-Wl,-Map={base}/boot2.map" for x in cflags]
+    args.extend(cflags)
     args.extend([str(output_file), str(input_file)])
     exec_tool(args, input_file, output_file, verbose)
 
@@ -123,13 +127,23 @@ def conv_to_bin(compiler_path:str, input_file, output_file, verbose:bool=False):
     tool = get_compiler_tool("arm-none-eabi-objcopy", compiler_path)
     exec_tool([
         tool,
-        "-O"
+        "-O",
         "binary",
         input_file,
         output_file
-    ], input_file, output_file)
+    ], input_file, output_file, verbose)
 
-def gen_padded_source(bin_file, out_file):
+def gen_disass(compiler_path:str, input_file, output_file, verbose:bool=False):
+    tool = get_compiler_tool("arm-none-eabi-objdump", compiler_path)
+    exec_tool([
+        tool,
+        "-d",
+        input_file,
+        ">",
+        output_file
+    ], input_file, output_file, verbose)
+
+def gen_padded_source(bin_file, out_file, verb:bool):
     script = pathlib.Path("sdk") / "src" / "rp2_common" / "boot_stage2" / "pad_checksum"
     exec_tool([
         sys.executable, # Python
@@ -138,7 +152,14 @@ def gen_padded_source(bin_file, out_file):
         "0xffffffff",
         bin_file,
         out_file
-    ], bin_file, out_file)
+    ], bin_file, out_file, verb)
+
+def get_toolchain_version(compiler_path):
+    tool = get_compiler_tool("arm-none-eabi-gcc", compiler_path)
+    try:
+        return subprocess.check_output([tool, "--version"], shell=True).decode('utf-8').splitlines()[0]
+    except Exception as exc:
+        return "Failed to get compiler version: " + repr(exc) 
 
 def outpath(flash, file) -> pathlib.Path:
     return pathlib.Path(BUILD_ROOT) / flash / file
@@ -152,17 +173,20 @@ def gen_boot2_for_flash(flash:str, comp_path:str="", verb:bool=False):
     # clear out everything in it
     for file in os.scandir(build_dir):
         os.unlink(file.path)
+    boot2name = f"boot2_{flash}_4_padded_checksum.S"
     # step 1: generate stage2.c
     gen_stage2.main(pathlib.Path("stage2.c.jinja"), outpath(flash, "stage2.c"), flash, TOML_ROOT)
     # step 2: generate flash_info.h
     gen_stage2.main(pathlib.Path("flash_info.h.jinja"), outpath(flash, "flash_info.h"), flash, TOML_ROOT)
     # step 3: generate boot2.elf
-    exec_compiler(comp_path, outpath(flash, "stage2.c"), outpath(flash, "booot2.elf"), verb)
+    exec_compiler(comp_path, outpath(flash, "stage2.c"), outpath(flash, "boot2.elf"), verb)
     # step 4: generate boot2.bin
-    conv_to_bin(comp_path, outpath(flash, "booot2.elf"), outpath(flash, "boot2.bin"), verb)
+    conv_to_bin(comp_path, outpath(flash, "boot2.elf"), outpath(flash, "boot2.bin"), verb)
     # step 5: boot2_padded_checksummed.S
-    gen_padded_source(outpath(flash, "boot2.bin"), outpath(flash, "boot2.S"))
-    print(f"Generated successfully, size {os.path.getsize(outpath(flash, 'boot2.S'))}")
+    gen_padded_source(outpath(flash, "boot2.bin"), outpath(flash, boot2name), verb)
+    # additonally: generate readable disassembly
+    gen_disass(comp_path, outpath(flash, "boot2.elf"), outpath(flash, "boot2_disassembly.S"), verb)
+    print(f"Generated successfully, boot2.bin size {os.path.getsize(outpath(flash, 'boot2.bin'))} byte")
 
 # https://github.com/adafruit/cascadetoml/issues/10
 def fixup_adafruit_cascadetoml_fail():
@@ -175,11 +199,12 @@ def fixup_adafruit_cascadetoml_fail():
                 file.write_text(fixed)
                 print("Corrected nvm.toml/.cascade.toml file for Windows")
 
-def main(sdk_path: pathlib.Path = pathlib.Path("sdk"), toolchain_path: str = typer.Argument(""), verbose:bool = False):
+def main(toolchain_path: str = typer.Argument(""), verbose:bool = False):
     fixup_adafruit_cascadetoml_fail()
+    print("Toolchain version: " + get_toolchain_version(toolchain_path))
     # get all flash chips
     flashes = cascadetoml.filter_toml(pathlib.Path("nvm.toml"), ['technology="flash"'])
-    print(f"Got {len(flashes['nvm'])} matches")
+    print(f"Got {len(flashes['nvm'])} flash chips.")
     all_flashes: list[Tuple[str, str, int]] = [
         (f['manufacturer'], f['sku'], f['total_size']) 
         for f in flashes['nvm'] 
@@ -187,6 +212,7 @@ def main(sdk_path: pathlib.Path = pathlib.Path("sdk"), toolchain_path: str = typ
     ]
     for manufacturer, flash, size in all_flashes:
         print(f"Generating for {manufacturer.capitalize()} {flash} ({size / 1024.0 / 1024} MByte)")
+        #try:
         gen_boot2_for_flash(flash, toolchain_path, verbose)
         #except Exception as exc:
         #    print(f"Generating boot2.S failed for {flash} due to: {exc!r}")

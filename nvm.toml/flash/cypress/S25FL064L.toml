@@ -1,9 +1,0 @@
-# Settings for the Cypress (was Spansion) S25FL064L 8MiB SPI flash.
-# Datasheet: http://www.cypress.com/file/316661/download
-total_size = 0x800000 # 8 MiB
-start_up_time_us = 300
-memory_type = 0x60
-capacity = 0x17
-max_clock_speed_mhz = 108
-6b_quad_read = true
-32_qspi_write = true
