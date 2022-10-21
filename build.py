@@ -105,8 +105,9 @@ COMPILER_FLAGS = [
 ]
 
 def exec_tool(args, input_file, output_file, verbose:bool=False):
+    args = " ".join(map(str,args))
     if verbose:
-        print("Executing: " + " ".join(map(str,args)))
+        print("Executing: " + args)
     try:
         ret = subprocess.check_output(args, shell=True, stderr=subprocess.STDOUT)
         if len(ret) != 0:
@@ -163,8 +164,9 @@ def gen_padded_source(bin_file, out_file, verb:bool):
 def get_toolchain_version(compiler_path, verb:bool=False):
     tool = get_compiler_tool("arm-none-eabi-gcc", compiler_path)
     args = [str(tool), "--version"]
+    args = " ".join(args)
     if verb:
-        print("Executing: " + " ".join(args))
+        print("Executing: " + args)
     try:
         return subprocess.check_output(args, stderr=subprocess.STDOUT, shell=True).decode('utf-8').splitlines()[0]
     except subprocess.CalledProcessError as e:
