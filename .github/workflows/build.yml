@@ -23,7 +23,7 @@ jobs:
       - run: arm-none-eabi-gcc --version
       - name: Build examples
         run: |
-          python3 build.py
+          python3 build.py /home/runner/gcc-arm-none-eabi-10.2020.4-linux/gcc-arm-none-eabi-10-2020-q4-major --verbose
         shell: bash
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
