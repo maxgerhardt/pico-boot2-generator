@@ -74,8 +74,8 @@ Disassembly of section .text:
 20041f8e:	4b0d      	ldr	r3, [pc, #52]	; (20041fc4 <_stage2_boot+0xc4>)
 20041f90:	60a5      	str	r5, [r4, #8]
 20041f92:	603b      	str	r3, [r7, #0]
-20041f94:	9b01      	ldr	r3, [sp, #4]
-20041f96:	60a6      	str	r6, [r4, #8]
+20041f94:	60a6      	str	r6, [r4, #8]
+20041f96:	9b01      	ldr	r3, [sp, #4]
 20041f98:	42ab      	cmp	r3, r5
 20041f9a:	d108      	bne.n	20041fae <_stage2_boot+0xae>
 20041f9c:	4b0a      	ldr	r3, [pc, #40]	; (20041fc8 <_stage2_boot+0xc8>)
@@ -98,22 +98,20 @@ Disassembly of section .text:
 20041fd0:	10000104 	.word	0x10000104
 
 20041fd4 <wait_and_read>:
-20041fd4:	21c0      	movs	r1, #192	; 0xc0
-20041fd6:	0549      	lsls	r1, r1, #21
-20041fd8:	0003      	movs	r3, r0
-20041fda:	000a      	movs	r2, r1
-20041fdc:	2004      	movs	r0, #4
-20041fde:	b510      	push	{r4, lr}
-20041fe0:	6a8c      	ldr	r4, [r1, #40]	; 0x28
-20041fe2:	4204      	tst	r4, r0
-20041fe4:	d0fc      	beq.n	20041fe0 <wait_and_read+0xc>
-20041fe6:	2101      	movs	r1, #1
-20041fe8:	6a90      	ldr	r0, [r2, #40]	; 0x28
-20041fea:	4208      	tst	r0, r1
-20041fec:	d1fc      	bne.n	20041fe8 <wait_and_read+0x14>
-20041fee:	3b01      	subs	r3, #1
-20041ff0:	b2db      	uxtb	r3, r3
-20041ff2:	6e10      	ldr	r0, [r2, #96]	; 0x60
-20041ff4:	2b00      	cmp	r3, #0
-20041ff6:	d1fa      	bne.n	20041fee <wait_and_read+0x1a>
-20041ff8:	bd10      	pop	{r4, pc}
+20041fd4:	22c0      	movs	r2, #192	; 0xc0
+20041fd6:	0003      	movs	r3, r0
+20041fd8:	2104      	movs	r1, #4
+20041fda:	0552      	lsls	r2, r2, #21
+20041fdc:	6a90      	ldr	r0, [r2, #40]	; 0x28
+20041fde:	4208      	tst	r0, r1
+20041fe0:	d0fc      	beq.n	20041fdc <wait_and_read+0x8>
+20041fe2:	2101      	movs	r1, #1
+20041fe4:	6a90      	ldr	r0, [r2, #40]	; 0x28
+20041fe6:	4208      	tst	r0, r1
+20041fe8:	d1fc      	bne.n	20041fe4 <wait_and_read+0x10>
+20041fea:	3b01      	subs	r3, #1
+20041fec:	b2db      	uxtb	r3, r3
+20041fee:	6e10      	ldr	r0, [r2, #96]	; 0x60
+20041ff0:	2b00      	cmp	r3, #0
+20041ff2:	d1fa      	bne.n	20041fea <wait_and_read+0x16>
+20041ff4:	4770      	bx	lr

@@ -73,8 +73,8 @@ Disassembly of section .text:
 20041f8c:	4b0d      	ldr	r3, [pc, #52]	; (20041fc4 <_stage2_boot+0xc4>)
 20041f8e:	60a5      	str	r5, [r4, #8]
 20041f90:	603b      	str	r3, [r7, #0]
-20041f92:	9b01      	ldr	r3, [sp, #4]
-20041f94:	60a6      	str	r6, [r4, #8]
+20041f92:	60a6      	str	r6, [r4, #8]
+20041f94:	9b01      	ldr	r3, [sp, #4]
 20041f96:	42ab      	cmp	r3, r5
 20041f98:	d108      	bne.n	20041fac <_stage2_boot+0xac>
 20041f9a:	4b0b      	ldr	r3, [pc, #44]	; (20041fc8 <_stage2_boot+0xc8>)
@@ -98,21 +98,19 @@ Disassembly of section .text:
 20041fd0:	10000104 	.word	0x10000104
 
 20041fd4 <wait_and_read>:
-20041fd4:	21c0      	movs	r1, #192	; 0xc0
-20041fd6:	0549      	lsls	r1, r1, #21
-20041fd8:	0002      	movs	r2, r0
-20041fda:	000b      	movs	r3, r1
-20041fdc:	2004      	movs	r0, #4
-20041fde:	b510      	push	{r4, lr}
-20041fe0:	6a8c      	ldr	r4, [r1, #40]	; 0x28
-20041fe2:	4204      	tst	r4, r0
-20041fe4:	d0fc      	beq.n	20041fe0 <wait_and_read+0xc>
-20041fe6:	2101      	movs	r1, #1
-20041fe8:	6a98      	ldr	r0, [r3, #40]	; 0x28
-20041fea:	4208      	tst	r0, r1
-20041fec:	d1fc      	bne.n	20041fe8 <wait_and_read+0x14>
-20041fee:	6e18      	ldr	r0, [r3, #96]	; 0x60
-20041ff0:	2a01      	cmp	r2, #1
-20041ff2:	d000      	beq.n	20041ff6 <wait_and_read+0x22>
-20041ff4:	6e18      	ldr	r0, [r3, #96]	; 0x60
-20041ff6:	bd10      	pop	{r4, pc}
+20041fd4:	23c0      	movs	r3, #192	; 0xc0
+20041fd6:	0002      	movs	r2, r0
+20041fd8:	2104      	movs	r1, #4
+20041fda:	055b      	lsls	r3, r3, #21
+20041fdc:	6a98      	ldr	r0, [r3, #40]	; 0x28
+20041fde:	4208      	tst	r0, r1
+20041fe0:	d0fc      	beq.n	20041fdc <wait_and_read+0x8>
+20041fe2:	2101      	movs	r1, #1
+20041fe4:	6a98      	ldr	r0, [r3, #40]	; 0x28
+20041fe6:	4208      	tst	r0, r1
+20041fe8:	d1fc      	bne.n	20041fe4 <wait_and_read+0x10>
+20041fea:	6e18      	ldr	r0, [r3, #96]	; 0x60
+20041fec:	2a01      	cmp	r2, #1
+20041fee:	d000      	beq.n	20041ff2 <wait_and_read+0x1e>
+20041ff0:	6e18      	ldr	r0, [r3, #96]	; 0x60
+20041ff2:	4770      	bx	lr

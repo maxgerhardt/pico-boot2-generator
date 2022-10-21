@@ -18,6 +18,10 @@ pip3 install -r requirements.txt
 python3 build.py
 ```
 
+You can also use the already pregenerated files in `generates/`.
+
+These were generated using arm-nono-eabi-gcc 10.2.1 (Q4 Major).
+
 ## Credits
 
 * @tannewt for `gen_stage2.py` in https://github.com/adafruit/circuitpython

@@ -8,11 +8,11 @@ Disassembly of section .text:
 20041f00:	2121      	movs	r1, #33	; 0x21
 20041f02:	4672      	mov	r2, lr
 20041f04:	2002      	movs	r0, #2
-20041f06:	4b13      	ldr	r3, [pc, #76]	; (20041f54 <_stage2_boot+0x54>)
-20041f08:	b510      	push	{r4, lr}
-20041f0a:	6059      	str	r1, [r3, #4]
-20041f0c:	6899      	ldr	r1, [r3, #8]
-20041f0e:	4c12      	ldr	r4, [pc, #72]	; (20041f58 <_stage2_boot+0x58>)
+20041f06:	b510      	push	{r4, lr}
+20041f08:	4b12      	ldr	r3, [pc, #72]	; (20041f54 <_stage2_boot+0x54>)
+20041f0a:	4c13      	ldr	r4, [pc, #76]	; (20041f58 <_stage2_boot+0x58>)
+20041f0c:	6059      	str	r1, [r3, #4]
+20041f0e:	6899      	ldr	r1, [r3, #8]
 20041f10:	4381      	bics	r1, r0
 20041f12:	60d9      	str	r1, [r3, #12]
 20041f14:	23c0      	movs	r3, #192	; 0xc0
