@@ -160,10 +160,13 @@ def gen_padded_source(bin_file, out_file, verb:bool):
         out_file
     ], bin_file, out_file, verb)
 
-def get_toolchain_version(compiler_path):
+def get_toolchain_version(compiler_path, verb:bool=False):
     tool = get_compiler_tool("arm-none-eabi-gcc", compiler_path)
+    args = [str(tool), "--version"]
+    if verb:
+        print("Executing: " + " ".join(args))
     try:
-        return subprocess.check_output([tool, "--version"], stderr=subprocess.STDOUT, shell=True).decode('utf-8').splitlines()[0]
+        return subprocess.check_output(args, stderr=subprocess.STDOUT, shell=True).decode('utf-8').splitlines()[0]
     except Exception as exc:
         return "Failed to get compiler version: " + repr(exc) 
 
