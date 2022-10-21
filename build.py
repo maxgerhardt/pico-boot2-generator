@@ -108,7 +108,7 @@ def exec_tool(args, input_file, output_file, verbose:bool=False):
     if verbose:
         print("Executing: " + " ".join(map(str,args)))
     try:
-        ret = subprocess.check_output(args, shell=True)
+        ret = subprocess.check_output(args, shell=True, stderr=subprocess.STDOUT)
         if len(ret) != 0:
             print("Output: " + str(ret))
     except Exception as exc:
@@ -163,7 +163,7 @@ def gen_padded_source(bin_file, out_file, verb:bool):
 def get_toolchain_version(compiler_path):
     tool = get_compiler_tool("arm-none-eabi-gcc", compiler_path)
     try:
-        return subprocess.check_output([tool, "--version"], shell=True).decode('utf-8').splitlines()[0]
+        return subprocess.check_output([tool, "--version"], stderr=subprocess.STDOUT, shell=True).decode('utf-8').splitlines()[0]
     except Exception as exc:
         return "Failed to get compiler version: " + repr(exc) 
 
