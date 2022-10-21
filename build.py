@@ -211,7 +211,7 @@ def fixup_adafruit_cascadetoml_fail():
 
 def main(toolchain_path: str = typer.Argument(""), verbose:bool = False):
     fixup_adafruit_cascadetoml_fail()
-    print("Toolchain version: " + get_toolchain_version(toolchain_path))
+    print("Toolchain version: " + get_toolchain_version(toolchain_path, verbose))
     # get all flash chips
     flashes = cascadetoml.filter_toml(pathlib.Path("nvm.toml"), ['technology="flash"'])
     print(f"Got {len(flashes['nvm'])} flash chips.")
