@@ -7,11 +7,11 @@ import pathlib
 import cascadetoml
 import subprocess
 import gen_stage2 
+import shutil
 
 TOML_ROOT = "nvm.toml"
 BUILD_ROOT = "generated"
 COMPILER_FLAGS = [
-    "-DPICO_FLASH_SPI_CLKDIV=4",
     "-DRASPBERRYPI",
     "-DPICO_ON_DEVICE=1",
     "-DPICO_NO_BINARY_INFO=0",
@@ -120,17 +120,18 @@ def exec_tool(args, input_file, output_file, verbose:bool=False):
 def get_compiler_tool(name:str, compiler_path:str):
     return name if compiler_path == "" else str(pathlib.Path(compiler_path) / "bin" / name)
 
-def exec_compiler(compiler_path:str, input_file, output_file, verbose:bool=False):
+def exec_compiler(compiler_path:str, input_file, output_file, spi_clock_div:int, verbose:bool=False):
     tool = get_compiler_tool("arm-none-eabi-gcc", compiler_path)
     args = [ tool ] 
     cflags = COMPILER_FLAGS.copy()
+    cflags.insert(0, "-DPICO_FLASH_SPI_CLKDIV="+ str(spi_clock_div))
     base = os.path.dirname(output_file)
-    cflags = [x if x != "-Wl,-Map=boot2.map" else f"-Wl,-Map={base}/boot2.map" for x in cflags]
+    cflags = [x if x != "-Wl,-Map=boot2.map" else f"-Wl,-Map={base}/boot2_div_{spi_clock_div}.map" for x in cflags]
     args.extend(cflags)
     args.extend([str(output_file), str(input_file)])
     exec_tool(args, input_file, output_file, verbose)
 
-def conv_to_bin(compiler_path:str, input_file, output_file, verbose:bool=False):
+def conv_to_bin(compiler_path:str, input_file, output_file, verbose:bool):
     tool = get_compiler_tool("arm-none-eabi-objcopy", compiler_path)
     exec_tool([
         tool,
@@ -177,30 +178,25 @@ def get_toolchain_version(compiler_path, verb:bool=False):
 def outpath(subdir, file) -> pathlib.Path:
     return pathlib.Path(BUILD_ROOT) / subdir / file
 
-def gen_boot2_for_flash(flash:str, manufacturer:str, comp_path:str="", verb:bool=False):
+def gen_boot2_for_flash(flash:str, manufacturer:str, comp_path:str, spi_clock_div:int, verb:bool=False):
     # create build dir
     build_dir = os.path.join(BUILD_ROOT, manufacturer, flash)
-    for dir in [BUILD_ROOT, os.path.join(BUILD_ROOT, manufacturer), build_dir]:
-        if not os.path.isdir(dir):
-            os.mkdir(dir)
-    # clear out everything in it
-    for file in os.scandir(build_dir):
-        os.unlink(file.path)
-    boot2name = f"boot2_{flash}_4_padded_checksum.S"
+    os.makedirs(build_dir, exist_ok=True)
+    boot2name = f"boot2_{flash}_{spi_clock_div}_padded_checksum.S"
     subdir = os.path.join(manufacturer, flash)
     # step 1: generate stage2.c
     gen_stage2.main(pathlib.Path("stage2.c.jinja"), outpath(subdir, "stage2.c"), flash, TOML_ROOT)
     # step 2: generate flash_info.h
     gen_stage2.main(pathlib.Path("flash_info.h.jinja"), outpath(subdir, "flash_info.h"), flash, TOML_ROOT)
     # step 3: generate boot2.elf
-    exec_compiler(comp_path, outpath(subdir, "stage2.c"), outpath(subdir, "boot2.elf"), verb)
+    exec_compiler(comp_path, outpath(subdir, "stage2.c"), outpath(subdir, f"boot2_div_{spi_clock_div}.elf"), spi_clock_div, verb)
     # step 4: generate boot2.bin
-    conv_to_bin(comp_path, outpath(subdir, "boot2.elf"), outpath(subdir, "boot2.bin"), verb)
+    conv_to_bin(comp_path, outpath(subdir, f"boot2_div_{spi_clock_div}.elf"), outpath(subdir, f"boot2_div_{spi_clock_div}.bin"), verb)
     # step 5: boot2_padded_checksummed.S
-    gen_padded_source(outpath(subdir, "boot2.bin"), outpath(subdir, boot2name), verb)
+    gen_padded_source(outpath(subdir,  f"boot2_div_{spi_clock_div}.bin"), outpath(subdir, boot2name), verb)
     # additonally: generate readable disassembly
-    gen_disass(comp_path, outpath(subdir, "boot2.elf"), outpath(subdir, "boot2_disassembly.S"), verb)
-    print(f"Generated successfully, boot2.bin size {os.path.getsize(outpath(subdir, 'boot2.bin'))} byte")
+    gen_disass(comp_path, outpath(subdir, f"boot2_div_{spi_clock_div}.elf"), outpath(subdir, f"boot2_div_{spi_clock_div}_disassembly.S"), verb)
+    print(f"Generated successfully, boot2_div_{spi_clock_div}.bin size {os.path.getsize(outpath(subdir, f"boot2_div_{spi_clock_div}.bin"))} byte")
 
 # https://github.com/adafruit/cascadetoml/issues/10
 def fixup_adafruit_cascadetoml_fail():
@@ -224,11 +220,12 @@ def main(toolchain_path: str = typer.Argument(""), verbose:bool = False):
         for f in flashes['nvm'] 
         if 'sku' in f and f['sku'] != f['manufacturer']
     ]
+    shutil.rmtree(BUILD_ROOT, ignore_errors=True) # start with clean build output directory
     for manufacturer, flash, size in all_flashes:
         manufacturer = manufacturer.capitalize()
-        print(f"Generating for {manufacturer} {flash} ({size / 1024.0 / 1024} MByte)")
-        #try:
-        gen_boot2_for_flash(flash, manufacturer, toolchain_path, verbose)
+        for spi_clock_div in (2,4):
+            print(f"Generating for {manufacturer} {flash} ({size / 1024.0 / 1024} MByte) SPI clock div = {spi_clock_div}")
+            gen_boot2_for_flash(flash, manufacturer, toolchain_path, spi_clock_div, verbose)
         #except Exception as exc:
         #    print(f"Generating boot2.S failed for {flash} due to: {exc!r}")
 
