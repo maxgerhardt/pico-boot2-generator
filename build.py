@@ -196,7 +196,7 @@ def gen_boot2_for_flash(flash:str, manufacturer:str, comp_path:str, spi_clock_di
     gen_padded_source(outpath(subdir,  f"boot2_div_{spi_clock_div}.bin"), outpath(subdir, boot2name), verb)
     # additonally: generate readable disassembly
     gen_disass(comp_path, outpath(subdir, f"boot2_div_{spi_clock_div}.elf"), outpath(subdir, f"boot2_div_{spi_clock_div}_disassembly.S"), verb)
-    print(f"Generated successfully, boot2_div_{spi_clock_div}.bin size {os.path.getsize(outpath(subdir, f"boot2_div_{spi_clock_div}.bin"))} byte")
+    print(f"Generated successfully, boot2_div_{spi_clock_div}.bin size {os.path.getsize(outpath(subdir, f'boot2_div_{spi_clock_div}.bin'))} byte")
 
 # https://github.com/adafruit/cascadetoml/issues/10
 def fixup_adafruit_cascadetoml_fail():
