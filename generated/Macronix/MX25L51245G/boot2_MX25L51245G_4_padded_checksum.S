@@ -1,4 +1,4 @@
-// Padded and checksummed version of: generated\Macronix\MX25L51245G\boot2.bin
+// Padded and checksummed version of: generated\Macronix\MX25L51245G\boot2_div_4.bin
 
 .cpu cortex-m0plus
 .thumb

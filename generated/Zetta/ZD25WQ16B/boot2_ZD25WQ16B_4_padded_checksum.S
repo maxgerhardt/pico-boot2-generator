@@ -1,4 +1,4 @@
-// Padded and checksummed version of: generated\Zetta\ZD25WQ16B\boot2.bin
+// Padded and checksummed version of: generated\Zetta\ZD25WQ16B\boot2_div_4.bin
 
 .cpu cortex-m0plus
 .thumb

@@ -1,4 +1,4 @@
-// Padded and checksummed version of: generated\Cypress\S25FL216K\boot2.bin
+// Padded and checksummed version of: generated\Cypress\S25FL216K\boot2_div_4.bin
 
 .cpu cortex-m0plus
 .thumb

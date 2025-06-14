@@ -1,4 +1,4 @@
-// Padded and checksummed version of: generated\Micron\N25Q256A\boot2.bin
+// Padded and checksummed version of: generated\Micron\N25Q256A\boot2_div_4.bin
 
 .cpu cortex-m0plus
 .thumb

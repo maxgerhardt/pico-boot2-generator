@@ -1,0 +1,149 @@
+
+Discarded input sections
+
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .group         0x00000000        0xc C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+SRAM             0x20041f00         0x000000fc         xr
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+                0x20041f00                . = ORIGIN (SRAM)
+
+.text           0x20041f00       0xf4
+ *(.entry.*)
+ .entry._stage2_boot
+                0x20041f00       0xd4 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+                0x20041f00                _stage2_boot
+ *(.text.*)
+ .text.wait_and_read
+                0x20041fd4       0x20 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .text          0x20041ff4        0x0 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+LOAD C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+OUTPUT(generated\Macronix\MX25R1635F\boot2_div_4.elf elf32-littlearm)
+LOAD linker stubs
+
+.data           0x20041ff4        0x0
+ .data          0x20041ff4        0x0 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+
+.igot.plt       0x20041ff4        0x0
+ .igot.plt      0x20041ff4        0x0 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+
+.glue_7         0x20041ff4        0x0
+ .glue_7        0x20041ff4        0x0 linker stubs
+
+.glue_7t        0x20041ff4        0x0
+ .glue_7t       0x20041ff4        0x0 linker stubs
+
+.vfp11_veneer   0x20041ff4        0x0
+ .vfp11_veneer  0x20041ff4        0x0 linker stubs
+
+.v4_bx          0x20041ff4        0x0
+ .v4_bx         0x20041ff4        0x0 linker stubs
+
+.iplt           0x20041ff4        0x0
+ .iplt          0x20041ff4        0x0 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+
+.rel.dyn        0x20041ff4        0x0
+ .rel.iplt      0x20041ff4        0x0 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+
+.bss            0x20041ff4        0x0
+ .bss           0x20041ff4        0x0 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+
+.debug_info     0x00000000      0x427
+ .debug_info    0x00000000      0x427 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+
+.debug_abbrev   0x00000000      0x197
+ .debug_abbrev  0x00000000      0x197 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+
+.debug_loc      0x00000000      0x12e
+ .debug_loc     0x00000000      0x12e C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+
+.debug_aranges  0x00000000       0x28
+ .debug_aranges
+                0x00000000       0x28 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+
+.debug_ranges   0x00000000       0x38
+ .debug_ranges  0x00000000       0x38 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+
+.debug_macro    0x00000000     0x508e
+ .debug_macro   0x00000000      0x1d2 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x000001d2      0xac0 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00000c92       0x16 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00000ca8       0x22 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00000cca       0x22 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00000cec       0x5e C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00000d4a       0x18 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00000d62       0x94 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00000df6       0x35 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00000e2b       0x34 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00000e5f       0x16 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00000e75       0x28 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00000e9d       0x57 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00000ef4      0x103 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00000ff7       0x6a C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00001061      0x1df C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00001240      0x174 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x000013b4       0x10 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x000013c4       0x22 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x000013e6       0x76 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x0000145c       0x7c C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x000014d8      0x172 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x0000164a     0x150c C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00002b56       0x2e C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00002b84      0x333 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00002eb7       0x9b C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00002f52       0x6a C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00002fbc      0xbb5 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00003b71      0x6e7 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+ .debug_macro   0x00004258      0xe36 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+
+.debug_line     0x00000000      0x7ef
+ .debug_line    0x00000000      0x7ef C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+
+.debug_str      0x00000000    0x18994
+ .debug_str     0x00000000    0x18994 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+                              0x18b8e (size before relaxing)
+
+.comment        0x00000000       0x4d
+ .comment       0x00000000       0x4d C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+                                 0x4e (size before relaxing)
+
+.ARM.attributes
+                0x00000000       0x2b
+ .ARM.attributes
+                0x00000000       0x2b C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o
+
+.debug_frame    0x00000000       0x44
+ .debug_frame   0x00000000       0x44 C:\Users\Max\AppData\Local\Temp\ccCKMN7M.o

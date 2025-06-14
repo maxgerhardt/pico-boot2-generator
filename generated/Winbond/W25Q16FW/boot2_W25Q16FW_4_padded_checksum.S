@@ -1,4 +1,4 @@
-// Padded and checksummed version of: generated\Winbond\W25Q16FW\boot2.bin
+// Padded and checksummed version of: generated\Winbond\W25Q16FW\boot2_div_4.bin
 
 .cpu cortex-m0plus
 .thumb

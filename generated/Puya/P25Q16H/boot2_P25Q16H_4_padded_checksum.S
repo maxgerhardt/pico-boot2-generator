@@ -1,4 +1,4 @@
-// Padded and checksummed version of: generated\Puya\P25Q16H\boot2.bin
+// Padded and checksummed version of: generated\Puya\P25Q16H\boot2_div_4.bin
 
 .cpu cortex-m0plus
 .thumb

@@ -1,4 +1,4 @@
-// Padded and checksummed version of: generated\Issi\IS25LP016D\boot2.bin
+// Padded and checksummed version of: generated\Issi\IS25LP016D\boot2_div_4.bin
 
 .cpu cortex-m0plus
 .thumb

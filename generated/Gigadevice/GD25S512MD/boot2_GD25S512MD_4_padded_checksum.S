@@ -1,4 +1,4 @@
-// Padded and checksummed version of: generated\Gigadevice\GD25S512MD\boot2.bin
+// Padded and checksummed version of: generated\Gigadevice\GD25S512MD\boot2_div_4.bin
 
 .cpu cortex-m0plus
 .thumb
